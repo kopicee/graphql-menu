@@ -75,3 +75,7 @@ Updating the graphql types
   - We delegate from MenuSection to Section, because Section can't reference a MenuSection
 - It's also annoying to reveal all the extra fields like id, createdAt and updatedAt, so we only expose those for the MenuType.
 - Looks like I mistakenly added a price_override column to Modifiers that doesn't actually do anything useful. We should delegate to Item instead
+
+
+Final steps
+- Time to polish the specs. I'll add a custom matcher

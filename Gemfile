@@ -44,9 +44,6 @@ group :development, :test do
   # Load .env files automatically
   gem "dotenv"
 
-  # Interative graphql editor
-  gem "graphiql-rails"
-
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 
@@ -76,3 +73,6 @@ group :test do
 end
 
 gem "graphql", "~> 2.4"
+
+# Interative graphql editor
+gem "graphiql-rails"

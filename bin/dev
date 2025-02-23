@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
 
+# Process manager. Useful if we eventually add other components, e.g. Sidekiq
+# This should not be bundled.
 if ! gem list foreman -i --silent; then gem install foreman; fi
+
+# Automatic code reloading.
 if ! gem list rerun -i --silent; then gem install rerun; fi
 
 export RUBY_DEBUG_OPEN="true"

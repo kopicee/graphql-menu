@@ -7,13 +7,13 @@ This is a Rails app deployed on Fly.io -- see https://grain-graphql-menu.fly.dev
 ## Development
 
 ```shell
-# Install dependencies
-bundle i
+# Setup app locally
+bin/setup
 
-# Start app locally
-cp .env.example .env
-bundle exec rake db:prepare
-bin/rails serve
+# Start app locally. This installs the Foreman and Rerun gems for code reloading.
+bin/dev
+# Alternatively, just start the server.
+bin/rails server
 
 # Run all tests, or just a specific file
 bundle exec rspec
@@ -28,3 +28,29 @@ bin/rails console
 The application is deployed using Fly.io and GitHub actions. The deployment runs whenever there's a git push to the `main` branch.
 
 You can access the deployment at https://grain-graphql-menu.fly.dev/
+
+## Interacting with the API
+
+There is an interactive GUI:
+
+- https://grain-graphql-menu.fly.dev/graphiql
+- http://localhost:8080/graphiql
+
+
+Alternatively, use the command line:
+```shell
+# Call the deployed app.
+# Notice that the whole query sits in one line, since CRLF is not supported by the query parser.
+curl 'https://grain-graphql-menu.fly.dev/graphql' -X POST \
+-H 'Content-Type: application/json' \
+-d '{
+  "query":"  { menu(state:null){ id } }  "
+}'
+
+# Call the local app.
+curl 'http://localhost:8080/graphql' -X POST \
+-H 'Content-Type: application/json' \
+-d '{
+  "query":"  { menu(state:null){ id } }  "
+}'
+```
