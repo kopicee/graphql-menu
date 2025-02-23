@@ -1,0 +1,1 @@
+web: rerun --background --no-notify --ignore '*.{md,js.html,css}' -- bin/rails server
