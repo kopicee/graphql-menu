@@ -46,12 +46,12 @@ RSpec.describe GraphqlController do
         end
 
         context 'with state matching query' do
-          let(:gql_query) { '{ menu(state:active) { id } }' }
+          let(:gql_query) { '{ menu(state:active) { id state } }' }
           let(:expected_response) do
             {
               data: {
                 menu: array_including(
-                  { id: /\d+/ }
+                  { id: /\d+/, state: 'active' }
                 )
               }
             }
