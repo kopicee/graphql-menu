@@ -47,3 +47,31 @@ Prepare to write code
       }
     }
     ```
+
+Setting up more models
+- rails g model ...
+- back to chatgpt.com
+  ```
+  Consider the requirements for these models:
+  - **Menu**: A representation of a restaurant menu.
+      - It consists of one or more Sections using MenuSection.
+      - *For example, the Pizza Menu*
+
+  ...
+
+  Next, consider this Rails schema.rb:
+      ActiveRecord::Schema[8.0].define(version: 2025_02_23_092522) do
+      ...
+
+  generate a seed.rb for this schema using the examples given in the requirements
+  ```
+- it generates stuff but it's too imperative
+- let's refactor so that we can use `#tap` to group related statements together
+
+Updating the graphql types
+- Now we have all the data we need. It's time to generate and fine-tune the GQL types
+- `rails g graphql:object Section`
+- I think it's a bit annoying to force the query to step through each join table, so let's tweak the types to merge display_order with the actual types
+  - We delegate from MenuSection to Section, because Section can't reference a MenuSection
+- It's also annoying to reveal all the extra fields like id, createdAt and updatedAt, so we only expose those for the MenuType.
+- Looks like I mistakenly added a price_override column to Modifiers that doesn't actually do anything useful. We should delegate to Item instead

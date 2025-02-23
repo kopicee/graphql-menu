@@ -8,20 +8,170 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 # db/seeds.rb
+# Create menus
+#
 
-def this_year(month, day)
-  Date.today.change(month:, day:).to_s
+pizza_items = {
+  items: [
+    Item.create!(
+      kind: 'product',
+      label: 'Margherita Pizza',
+      description: 'Margherita pizza with fresh basil, a timeless classic.',
+      price: 10.99
+    ),
+    Item.create!(
+      kind: 'product',
+      label: 'Currywurst Pizza',
+      description: 'Confuse your German, Indian and Italian friends!',
+      price: 14.99
+    )
+  ],
+  modifiers: [
+    ModifierGroup.create!(
+      label: 'Extra toppings?',
+      selection_required_min: 0,
+      selection_required_max: 3
+    ).tap do |modifier_group|
+      [
+        Modifier.create!(
+          modifier_group:,
+          display_order: 1,
+          item: Item.create!(
+            kind: 'component',
+            label: 'Extra Cheese',
+            description: "Can't go wrong with more cheese!",
+            price: 1.5
+          )
+        ),
+        Modifier.create!(
+          modifier_group:,
+          display_order: 2,
+          item: Item.create!(
+            kind: 'component',
+            label: 'Mala sauce',
+            description: "We won't judge!",
+            price: 2.5
+          )
+        )
+      ]
+    end,
+    ModifierGroup.create!(
+      label: 'Select size',
+      selection_required_min: 1,
+      selection_required_max: 1,
+    ).tap do |modifier_group|
+      [
+        Modifier.create!(
+          modifier_group:,
+          display_order: 1,
+          item: Item.create!(
+            kind: 'component',
+            label: 'Solo',
+            description: '9-inch pizza, just for you.',
+            price: 0
+          )
+        ),
+        Modifier.create!(
+          modifier_group:,
+          display_order: 2,
+          item: Item.create!(
+            kind: 'component',
+            label: 'Mega',
+            description: '11-inch pizza, perfect for a pair.',
+            price: 0
+          )
+        ),
+        Modifier.create!(
+          modifier_group:,
+          display_order: 3,
+          item: Item.create!(
+            kind: 'component',
+            label: 'Giga',
+            description: '13-inch pizza, for a family of four.',
+            price: 0
+          )
+        )
+      ]
+    end
+  ]
+}.tap do |config|
+  modifier_groups = config[:modifiers]
+  items = config[:items]
+
+  modifier_groups.each do |modifier_group|
+     items.each do |item|
+       ItemModifierGroup.create!(item:, modifier_group:)
+     end
+  end
 end
 
-Menu.create([
-  { label: 'new_years_day',    state: 'INACTIVE',  start_date: this_year(1, 1),   end_date: this_year(1, 1) },
-  { label: 'chinese_new_year', state: 'ACTIVE',    start_date: this_year(1, 31),  end_date: this_year(2, 20) },
-  { label: 'good_friday',      state: 'ACTIVE',    start_date: this_year(4, 18),  end_date: this_year(4, 18) },
-  { label: 'labour_day',       state: 'ACTIVE',    start_date: this_year(5, 1),   end_date: this_year(5, 1) },
-  { label: 'hari_raya_puasa',  state: 'INACTIVE',  start_date: this_year(5, 16),  end_date: this_year(5, 17) },
-  { label: 'deepavali',        state: 'ACTIVE',    start_date: this_year(10, 23), end_date: this_year(10, 23) },
-  { label: 'christmas',        state: 'INACTIVE',  start_date: this_year(12, 25), end_date: this_year(12, 25) },
-  { label: 'national_day',     state: 'ACTIVE',    start_date: this_year(8, 9),   end_date: this_year(8, 9) },
-  { label: 'mothers_day',      state: 'INACTIVE',  start_date: this_year(5, 11),  end_date: this_year(5, 11) },
-  { label: 'fathers_day',      state: 'ACTIVE',    start_date: this_year(6, 15),  end_date: this_year(6, 15) }
-])
+quaffable_items = {
+  items: [
+    Item.create!(
+      kind: 'product',
+      label: 'Soft drink',
+      description: 'Just grab a can from our chiller!',
+      price: 3.5,
+    ),
+    Item.create!(
+      kind: 'product',
+      label: 'Lemonade',
+      description: 'Home-brewed lemonade. Hits the spot!',
+      price: 8.0,
+    ),
+    Item.create!(
+      kind: 'product',
+      label: 'Cherryade',
+      description: "Like lemonade, but uses cherry.",
+      price: 8.0,
+    ),
+    Item.create!(
+      kind: 'product',
+      label: 'Marine Parade',
+      description: 'Ask us about our East Coast plans!',
+      price: 8.0,
+    ),
+    Item.create!(
+      kind: 'product',
+      label: 'Esplanade',
+      description: "I'm not going to explain this one.",
+      price: 8.0,
+    )
+  ]
+}
+
+Menu.create!(
+  label: 'Pizza Menu',
+  state: :active,
+  start_date: Date.today,
+  end_date: Date.today + 30.days,
+).tap do |menu|
+  sections = [
+    {
+      label: 'Classic Pizzas',
+      description: 'A delightful selection of our handmade pizzas',
+      items: pizza_items[:items]
+    },
+    {
+      label: 'Drinks',
+      description: 'To wash down the grease!',
+      items: quaffable_items[:items]
+    }
+  ]
+
+  sections.each_with_index do |config, index|
+    display_order = index + 1
+    label = config[:label]
+    description = config[:description]
+    items = config[:items]
+
+    Section.create!(label:, description:)
+      .tap { |section| MenuSection.create!(menu:, section:, display_order:) }
+      .tap do |section|
+        items.each_with_index do |item, index|
+          display_order = index + 1
+          SectionItem.create!(section:, item:, display_order:)
+        end
+      end
+  end
+end
