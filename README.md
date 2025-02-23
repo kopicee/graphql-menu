@@ -54,3 +54,51 @@ curl 'http://localhost:8080/graphql' -X POST \
   "query":"  { menu(state:null){ id } }  "
 }'
 ```
+
+GraphQL query to fetch all exposed fields:
+```
+{
+  menu(state:null) {
+    id
+    label
+    state
+    startDate
+    endDate
+    createdAt
+    updatedAt
+    menuSections {
+      displayOrder
+      label
+      description
+      items {
+        label
+        description
+        kind
+        price
+        modifierGroups {
+          label
+          selectionRequiredMin
+          selectionRequiredMax
+          modifiers {
+            displayOrder
+            label
+            description
+            kind
+            priceOverride
+            defaultQuantity
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+In one-line curl, with [jq](https://jqlang.org/) for readability:
+```shell
+curl 'https://grain-graphql-menu.fly.dev/graphql' -X POST \
+-H 'Content-Type: application/json' \
+-d '{
+  "query":"  { menu(state:null) { id label state startDate endDate createdAt updatedAt menuSections { displayOrder label description items { label description kind price modifierGroups { label selectionRequiredMin selectionRequiredMax modifiers { displayOrder label description kind priceOverride defaultQuantity } } } } } }  "
+}' | jq
+```
