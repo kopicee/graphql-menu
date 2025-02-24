@@ -103,6 +103,204 @@ curl 'https://grain-graphql-menu.fly.dev/graphql' -X POST \
 }' | jq
 ```
 
+<details><summary>Click to show a sample response</summary>
+
+```json
+{
+  "data": {
+    "menu": [
+      {
+        "id": "13",
+        "label": "Pizza Menu",
+        "state": "active",
+        "startDate": "2025-02-23",
+        "endDate": "2025-03-25",
+        "createdAt": "2025-02-23T19:06:14Z",
+        "updatedAt": "2025-02-23T19:06:14Z",
+        "menuSections": [
+          {
+            "displayOrder": 1,
+            "label": "Classic Pizzas",
+            "description": "A delightful selection of our handmade pizzas",
+            "items": [
+              {
+                "label": "Margherita Pizza",
+                "description": "Margherita pizza with fresh basil, a timeless classic.",
+                "kind": "product",
+                "price": 10.99,
+                "modifierGroups": [
+                  {
+                    "label": "Extra toppings?",
+                    "selectionRequiredMin": 0,
+                    "selectionRequiredMax": 3,
+                    "modifiers": [
+                      {
+                        "displayOrder": 1,
+                        "label": "Extra Cheese",
+                        "description": "Can't go wrong with more cheese!",
+                        "kind": "component",
+                        "priceOverride": 1.5,
+                        "defaultQuantity": 0
+                      },
+                      {
+                        "displayOrder": 2,
+                        "label": "Mala sauce",
+                        "description": "We won't judge!",
+                        "kind": "component",
+                        "priceOverride": 2.5,
+                        "defaultQuantity": 0
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Select size",
+                    "selectionRequiredMin": 1,
+                    "selectionRequiredMax": 1,
+                    "modifiers": [
+                      {
+                        "displayOrder": 1,
+                        "label": "Solo",
+                        "description": "9-inch pizza, just for you.",
+                        "kind": "component",
+                        "priceOverride": 0,
+                        "defaultQuantity": 0
+                      },
+                      {
+                        "displayOrder": 2,
+                        "label": "Mega",
+                        "description": "11-inch pizza, perfect for a pair.",
+                        "kind": "component",
+                        "priceOverride": 0,
+                        "defaultQuantity": 0
+                      },
+                      {
+                        "displayOrder": 3,
+                        "label": "Giga",
+                        "description": "13-inch pizza, for a family of four.",
+                        "kind": "component",
+                        "priceOverride": 0,
+                        "defaultQuantity": 0
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "label": "Currywurst Pizza",
+                "description": "Confuse your German, Indian and Italian friends!",
+                "kind": "product",
+                "price": 14.99,
+                "modifierGroups": [
+                  {
+                    "label": "Extra toppings?",
+                    "selectionRequiredMin": 0,
+                    "selectionRequiredMax": 3,
+                    "modifiers": [
+                      {
+                        "displayOrder": 1,
+                        "label": "Extra Cheese",
+                        "description": "Can't go wrong with more cheese!",
+                        "kind": "component",
+                        "priceOverride": 1.5,
+                        "defaultQuantity": 0
+                      },
+                      {
+                        "displayOrder": 2,
+                        "label": "Mala sauce",
+                        "description": "We won't judge!",
+                        "kind": "component",
+                        "priceOverride": 2.5,
+                        "defaultQuantity": 0
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Select size",
+                    "selectionRequiredMin": 1,
+                    "selectionRequiredMax": 1,
+                    "modifiers": [
+                      {
+                        "displayOrder": 1,
+                        "label": "Solo",
+                        "description": "9-inch pizza, just for you.",
+                        "kind": "component",
+                        "priceOverride": 0,
+                        "defaultQuantity": 0
+                      },
+                      {
+                        "displayOrder": 2,
+                        "label": "Mega",
+                        "description": "11-inch pizza, perfect for a pair.",
+                        "kind": "component",
+                        "priceOverride": 0,
+                        "defaultQuantity": 0
+                      },
+                      {
+                        "displayOrder": 3,
+                        "label": "Giga",
+                        "description": "13-inch pizza, for a family of four.",
+                        "kind": "component",
+                        "priceOverride": 0,
+                        "defaultQuantity": 0
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "displayOrder": 2,
+            "label": "Drinks",
+            "description": "To wash down the grease!",
+            "items": [
+              {
+                "label": "Soft drink",
+                "description": "Just grab a can from our chiller!",
+                "kind": "product",
+                "price": 3.5,
+                "modifierGroups": []
+              },
+              {
+                "label": "Lemonade",
+                "description": "Home-brewed lemonade. Hits the spot!",
+                "kind": "product",
+                "price": 8,
+                "modifierGroups": []
+              },
+              {
+                "label": "Cherryade",
+                "description": "Like lemonade, but uses cherry.",
+                "kind": "product",
+                "price": 8,
+                "modifierGroups": []
+              },
+              {
+                "label": "Marine Parade",
+                "description": "Ask us about our East Coast plans!",
+                "kind": "product",
+                "price": 8,
+                "modifierGroups": []
+              },
+              {
+                "label": "Esplanade",
+                "description": "I'm not going to explain this one.",
+                "kind": "product",
+                "price": 8,
+                "modifierGroups": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+
+</details>
+
 ## Notes
 
 I've never worked with GraphQL before so this took a bit of time to figure out. Also, my day-to-day framework is [Hanami](https://hanamirb.org/), so my Rails setup might look a bit weird.
