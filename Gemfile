@@ -76,3 +76,5 @@ gem "graphql", "~> 2.4"
 
 # Interative graphql editor
 gem "graphiql-rails"
+
+gem "rack-cors"
